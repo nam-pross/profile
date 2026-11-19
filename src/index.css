@@ -1,3 +1,75 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
-:root{font-family:'DM Sans',sans-serif;color:#f4f4f5;background:#09090b;color-scheme:dark;font-synthesis:none;text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased;font-size:16px;line-height:1.65}*{box-sizing:border-box}body{margin:0}a{color:inherit;text-decoration:none}button{font:inherit;cursor:pointer;color:inherit}button:focus-visible,a:focus-visible{outline:3px solid #bef264;outline-offset:5px}h1,h2,h3,p{margin:0}h1,h2,h3{font-family:'Space Grotesk',sans-serif;line-height:1.12}html{scroll-behavior:smooth;scroll-padding-top:30px}::selection{background:#bef264;color:#11150b}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}.skip{position:absolute;left:20px;top:-80px;background:#202023;padding:12px;z-index:20}.skip:focus{top:10px}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition:none!important}}
+@import 'tailwindcss';
 
+@theme {
+ --font-sans: 'DM Sans', sans-serif;
+ --font-display: 'Space Grotesk', sans-serif;
+}
+@layer base {
+ html { @apply bg-zinc-950 text-zinc-100 antialiased; color-scheme:dark; scroll-behavior:smooth; scroll-padding-top:110px; }
+ body { @apply m-0 min-w-80; }
+ button { @apply cursor-pointer; }
+ button:disabled { @apply cursor-not-allowed opacity-40; }
+ a:focus-visible,button:focus-visible { @apply outline-2 outline-offset-4 outline-lime-300; }
+ ::selection { @apply bg-lime-300 text-zinc-950; }
+}
+@layer components {
+ .motion-toggle { @apply flex items-center gap-2 rounded-full border border-white/15 bg-white/[.025] px-3 py-2 text-xs text-zinc-400 transition hover:border-lime-300/50 hover:text-lime-300; }
+ .motion-toggle span { @apply text-lime-300; }
+ .stack-strip { @apply overflow-hidden border-y border-white/10 bg-white/[.015]; }
+ .stack-strip .wrap { @apply mx-auto flex max-w-7xl items-center gap-6 px-6 py-6 sm:px-10 lg:px-16; }
+ .stack-strip .wrap>span { @apply shrink-0 text-xs text-zinc-500; }
+ .marquee-window { @apply min-w-0 flex-1 overflow-hidden; mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent); }
+ .marquee-track { @apply flex w-max; animation:marquee 30s linear infinite; }
+ .marquee-group { @apply flex shrink-0 items-center gap-10 pr-10; }
+ .marquee-group b { @apply flex items-center gap-5 whitespace-nowrap font-display text-base font-medium text-zinc-400; }
+ .marquee-group i { @apply text-xs not-italic text-lime-300/50; }
+ .marquee-window:hover .marquee-track { animation-play-state:paused; }
+ .demo-panel { @apply rounded-2xl border border-white/10 bg-zinc-900/50 p-6 sm:p-9; }
+ .demo-toolbar { @apply mb-6 flex flex-wrap items-center justify-between gap-4 text-sm; }
+ .demo-panel button { @apply rounded-lg border border-white/20 bg-white/5 px-4 py-2.5 text-sm transition hover:border-lime-300/50 hover:bg-lime-300/10; }
+ .demo-kicker { @apply block text-xs tracking-widest text-lime-300; }
+ .demo-panel h3 { @apply my-4 font-display text-2xl leading-snug; }
+ .demo-panel p { @apply leading-8 text-zinc-400; }
+ .demo-copy { @apply min-h-28; animation:enter .3s ease; }
+ .demo-footnote { @apply mt-6 block text-xs leading-6 text-zinc-500; }
+ .outfit-demo,.chess-demo { @apply grid items-center gap-8 md:grid-cols-2; }
+ .garment { @apply mx-auto max-h-64 w-full; filter:drop-shadow(0 12px 20px #0009); }
+ .garment path { transition:fill .3s; }
+ .swatches { @apply mt-6 flex gap-4; }
+ .swatches button { @apply size-9 rounded-full border-2 border-transparent p-0; }
+ .swatches button[aria-pressed=true] { @apply outline-2 outline-offset-4 outline-white; }
+ .demo-controls { @apply mt-5 flex flex-wrap gap-3; }
+ .demo-panel .demo-status { @apply my-5 font-semibold text-lime-300; }
+ .trip-steps { @apply mt-7 flex flex-col gap-4 sm:flex-row; }
+ .trip-steps li { @apply flex-1 border-t-2 border-zinc-700 pt-3 text-xs text-zinc-500; }
+ .trip-steps li.completed { @apply border-lime-300 text-lime-200; }
+ .board { @apply mx-auto grid aspect-square w-full max-w-80 grid-cols-8 overflow-hidden rounded-lg border-4 border-zinc-700; }
+ .board span { @apply flex aspect-square items-center justify-center text-3xl leading-none text-zinc-950 sm:text-4xl; font-family:'Segoe UI Symbol',sans-serif; }
+ .dark-square { background:#7c9981; }.light-square { background:#e5eddc; }
+}
+/* Only animation and specialized illustration effects live outside utilities. */
+#root { isolation:isolate; }
+.visual-grid { background-image:linear-gradient(#bef26409 1px,transparent 1px),linear-gradient(90deg,#bef26409 1px,transparent 1px);background-size:32px 32px; }
+.ambient-motion { position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none; }
+.ambient-orb { position:absolute;width:480px;height:480px;border-radius:50%;animation:drift 18s ease-in-out infinite;background:radial-gradient(circle,#bef26410,transparent 68%); }
+.orb-green { top:-200px;left:-180px; }.orb-blue { right:-220px;top:35%;background:radial-gradient(circle,#6fa8ff10,transparent 68%);animation-delay:-9s; }
+.floating-glyph { position:absolute;font:40px monospace;color:#bef26412;animation:bob 9s ease-in-out infinite; }
+.glyph-one { left:3%;top:30%; }.glyph-two { right:3%;top:15%;animation-delay:-3s; }.glyph-three { right:3%;bottom:10%;font-size:28px;animation-delay:-7s; }
+.code-object { animation:code-float 6s ease-in-out infinite; }.hero-orbit { animation:pulse-ring 7s ease-in-out infinite; }.secondary-orbit { animation:spin 35s linear infinite; }.floating-chip { animation:bob 5s ease-in-out infinite; }.chip-delay { animation-delay:-3s; }.spin-mark { animation:spin 20s linear infinite; }
+.shimmer-text { background:linear-gradient(110deg,#bef264 20%,#f4ffe6 40%,#91c94c 60%,#bef264 80%);background-size:200% auto;background-clip:text;color:transparent;animation:shimmer 9s linear infinite; }
+.project-symbol { animation:bob 6s ease-in-out infinite; }.visual-orbit { animation:pulse-ring 8s ease-in-out infinite; }.tilt-card { transform:perspective(1000px) rotateX(var(--tilt-x,0deg)) rotateY(var(--tilt-y,0deg));transition:transform .18s ease-out; }.tilt-card:hover { transform:perspective(1000px) rotateX(var(--tilt-x,0deg)) rotateY(var(--tilt-y,0deg)) translateY(-5px); }.tilt-card .project-visual::after { content:'';position:absolute;inset:0;background:radial-gradient(260px circle at var(--glow-x,50%) var(--glow-y,50%),#ffffff13,transparent 70%);opacity:0;transition:opacity .3s;pointer-events:none; }.tilt-card:hover .project-visual::after { opacity:1; }
+.enter-page { animation:enter .55s ease both; }.reveal { opacity:0;transform:translateY(24px);transition:opacity .65s,transform .65s; }.reveal.is-visible { opacity:1;transform:none; }
+@keyframes enter { from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none} }
+@keyframes bob { 0%,100%{translate:0 0}50%{translate:0 -12px} }
+@keyframes code-float { 0%,100%{transform:translateY(0) rotate(-10deg)}50%{transform:translateY(-14px) rotate(-5deg)} }
+@keyframes spin { to{rotate:360deg} }
+@keyframes pulse-ring { 0%,100%{scale:1}50%{scale:1.08} }
+@keyframes shimmer { to{background-position:200% center} }
+@keyframes drift { 50%{transform:translate(50px,65px) scale(1.1)} }
+@keyframes marquee { to{transform:translateX(-50%)} }
+html[data-motion=paused] *,html[data-motion=paused] *::before,html[data-motion=paused] *::after { animation-play-state:paused!important;transition:none!important; }
+html[data-motion=paused] .reveal,html[data-motion=paused] .enter-page,html[data-motion=paused] .demo-copy { animation:none!important;opacity:1;transform:none; }
+html[data-motion=paused] .tilt-card { transform:none; }
+@media(max-width:600px){.floating-glyph{display:none}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}.tilt-card,.tilt-card:hover{transform:none}.motion-toggle{display:none}.marquee-track{display:block;width:auto}.marquee-group{flex-wrap:wrap;gap:14px;padding:0}.marquee-group[aria-hidden=true]{display:none}.marquee-window{mask-image:none}}

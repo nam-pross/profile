@@ -1,8 +1,8 @@
 # Developer Portfolio
 
-English portfolio built with React, TypeScript, and Vite. Local setup; not published.
+English portfolio built with React, TypeScript, Vite, and Tailwind CSS v4. Local project; not published.
 
-## Development
+## Run
 
 ```powershell
 cd F:\profile\frontend
@@ -10,38 +10,45 @@ npm install
 npm run dev
 ```
 
-## Production
+Use `npm run build` for a production build and `npm run preview` to serve it.
 
-```powershell
-npm run build
-npm run preview
-```
+## Pages and navigation
 
-## Customize
+Projects open as dedicated pages, not dialogs. Hash routes work on static hosting without server rewrite rules:
 
-Edit `src/portfolio.ts` for projects and contact links. Empty contact links are hidden. Name Nguyen Van Nam is inferred from the CAB Systems folder: confirm before publishing. Biography and brand initials are in `src/App.tsx`; page metadata is in `index.html`.
+- `#/` — home
+- `#/work`, `#/about`, `#/contact` — home sections
+- `#/projects/news` — HybriNews
+- `#/projects/stylio` — STYLIO
+- `#/projects/chess` — BitGambit
+- `#/projects/cab` — CAB Systems
+- `#/projects/analyzer` — Chess Analyzer
+
+Pages support direct links, reloads, browser history, breadcrumb navigation, next-project links, route-specific titles, and an unknown-route fallback. Focus and scroll reset on navigation.
+
+## Styling and content
+
+Tailwind is configured through `@tailwindcss/vite` in `vite.config.ts`. Layouts, spacing, typography, colors, and responsive states use utility classes. Shared demo components use Tailwind `@apply` in `src/index.css`; custom CSS is reserved for motion and illustration effects. The old App.css is removed.
+
+Edit `src/portfolio.ts` for project information and contact links; `src/projectDetails.ts` holds highlights, architecture, and demo URLs. Empty contact links are hidden. Name Nguyen Van Nam is inferred from the CAB Systems folder and should be confirmed. Biography and initials are in `src/App.tsx`.
+
+Motion includes a technology marquee, floating hero art, ambient light, scroll reveals, and pointer tilt. Pause motion, reduced-motion preferences, and background-tab pausing are supported.
+
+## Demo scope
+
+The user requested fictional demo links. `https://example.com/demo/...` links are explicitly labeled placeholders; replace them with verified application URLs before publishing.
+
+Interactive previews are portfolio illustrations, not the original applications:
+
+- HybriNews switches between a prewritten fictional article and summary.
+- STYLIO changes an SVG garment color; no AI inference.
+- BitGambit and Chess Analyzer replay a fixed opening; no engine analysis.
+- CAB Systems advances a simulated trip; no booking or payment is created.
 
 ## Content provenance
 
-- HybriNews: frontend manifest, backend README, related llm-news-summarization README. Planned features are not claimed as delivered.
-- STYLIO: mobile manifest and AI service README, including attributed FASHN integration.
-- BitGambit: frontend manifest and workspace directory structure.
-- CAB Systems: service directories and requirements README.
-- Chess Analyzer: README.
+Project descriptions are based on local README files, dependency manifests, and service structure from HybriNews, llm-news-summarization, STYLIO, BitGambit, CAB Systems, and Chess Analyzer. Planned scope is distinguished from verified implementation. Runtime behavior, production readiness, and personal contribution scope have not been independently verified. No private source code or credentials were copied from those projects.
 
-Project visuals are typographic illustrations, not screenshots. Runtime functionality, production readiness, and personal contribution scope have not been independently verified. No credentials, private source files, or unverified demo/contact URLs were copied. AlphaZero_Gomoku was excluded because its README identifies an upstream implementation.
+## Verification
 
-The UI supports responsive layouts, project category filters, native keyboard-accessible dialogs, reduced motion, and anchor navigation. Fonts load from Google Fonts with system fallbacks. No backend or additional packages required.
-
-## Project spotlights and motion
-
-Click a project image or title to open its detailed spotlight. Each spotlight includes the idea, implementation overview, highlights, architecture, and a local interactive concept demo. These previews are portfolio illustrations, not the original applications:
-
-- HybriNews: switch between a prewritten fictional article and its summary.
-- STYLIO: change the color of an SVG garment illustration; no AI inference.
-- BitGambit / Chess Analyzer: step through a fixed opening; no engine analysis.
-- CAB Systems: advance and reset a simulated trip; no booking or payment request.
-
-The user requested fictional demo links. `src/projectDetails.ts` centralizes the explicitly labeled `https://example.com/demo/...` placeholders. Replace them with verified deployment URLs before using them as live demos.
-
-Scroll reveals use IntersectionObserver with visible fallbacks. The hero and project cards have subtle CSS motion. All animation is disabled when the visitor enables reduced motion. Native dialogs support Escape, focus containment, and backdrop dismissal.
+TypeScript and the production Tailwind/Vite build pass. Browser visual verification is unavailable in this environment because the local preview connection times out.

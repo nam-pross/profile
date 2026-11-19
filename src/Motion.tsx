@@ -19,7 +19,7 @@ export function MotionControl() {
   return <button className="motion-toggle" aria-pressed={paused} onClick={() => setPaused(!paused)}>{paused ? 'Play motion' : 'Pause motion'}<span aria-hidden="true">{paused ? '▷' : 'Ⅱ'}</span></button>
 }
 
-export function tiltCard(event: PointerEvent<HTMLButtonElement>) {
+export function tiltCard(event: PointerEvent<HTMLAnchorElement>) {
   if (event.pointerType !== 'mouse' || document.documentElement.dataset.motion !== 'on') return
   const card = event.currentTarget
   const rect = card.getBoundingClientRect()
@@ -31,7 +31,7 @@ export function tiltCard(event: PointerEvent<HTMLButtonElement>) {
   card.style.setProperty('--glow-y', `${y * 100}%`)
 }
 
-export function resetCard(event: PointerEvent<HTMLButtonElement>) {
+export function resetCard(event: PointerEvent<HTMLAnchorElement>) {
   event.currentTarget.style.removeProperty('--tilt-x')
   event.currentTarget.style.removeProperty('--tilt-y')
 }
@@ -44,3 +44,4 @@ export function TechMarquee() {
 export function AmbientMotion() {
   return <div className="ambient-motion" aria-hidden="true"><div className="ambient-orb orb-green"/><div className="ambient-orb orb-blue"/><div className="floating-glyph glyph-one">{'{ }'}</div><div className="floating-glyph glyph-two">+</div><div className="floating-glyph glyph-three">&lt;/&gt;</div></div>
 }
+
