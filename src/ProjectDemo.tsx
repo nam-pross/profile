@@ -1,0 +1,21 @@
+import { useState } from 'react'
+
+const moves = ['Starting position', '1. e4', '1… e5', '2. Nf3', '2… Nc6']
+const steps = ['Request created', 'Finding a driver', 'Driver assigned', 'Trip in progress', 'Trip completed']
+
+export function ProjectDemo({ id }: { id: string }) {
+  const [step, setStep] = useState(0)
+  const [brief, setBrief] = useState(true)
+  const [color, setColor] = useState('#a78bfa')
+  if (id === 'news') return <div className="demo-panel"><div className="demo-toolbar"><strong>HybriNews / Reading room</strong><button onClick={() => setBrief(!brief)}>{brief ? 'Read full sample' : 'Show short summary'}</button></div><span className="demo-kicker">SAMPLE ARTICLE · TECHNOLOGY</span><h3>A community library opens a digital learning space</h3><p key={String(brief)} className="demo-copy">{brief ? 'A community library is introducing free coding workshops and shared computers to make digital learning more accessible.' : 'A community library has opened a new digital learning space with shared computers and free introductory coding workshops. Volunteers will guide learners through web basics and small hands-on projects. The program welcomes beginners and offers weekly sessions. This fictional article is sample content for the portfolio preview.'}</p><span className="demo-footnote">Prewritten sample text · No AI request is made</span></div>
+  if (id === 'stylio') return <div className="demo-panel outfit-demo"><div><span className="demo-kicker">STYLIO / COLOR STUDIO</span><h3>Find your palette.</h3><p>Choose a color to preview the garment illustration.</p><div className="swatches">{['#a78bfa', '#bef264', '#7dd3fc', '#fda4af'].map(c => <button key={c} style={{ background: c }} aria-label={`Select ${c} garment color`} aria-pressed={color === c} onClick={() => setColor(c)} />)}</div><span className="demo-footnote">Illustration only · Not AI virtual try-on</span></div><svg className="garment" viewBox="0 0 200 220" role="img" aria-label="T-shirt color preview"><path fill={color} d="M60 25 20 50 5 95 40 110 50 85 50 195 150 195 150 85 160 110 195 95 180 50 140 25C125 48 75 48 60 25Z"/><path fill="none" stroke="#0003" strokeWidth="4" d="M60 25Q100 75 140 25M55 180H145"/></svg></div>
+  if (id === 'cab') return <div className="demo-panel"><div className="demo-toolbar"><strong>CAB / Journey simulator</strong><span>Sample trip</span></div><p>Library → Central station</p><ol className="trip-steps">{steps.map((label, i) => <li key={label} className={i <= step ? 'completed' : ''} aria-current={i === step ? 'step' : undefined}>{label}</li>)}</ol><p aria-live="polite" className="demo-status">{steps[step]}</p><div className="demo-controls"><button onClick={() => setStep(Math.min(4, step + 1))} disabled={step === 4}>Next stage</button><button onClick={() => setStep(0)} disabled={step === 0}>Reset trip</button></div><span className="demo-footnote">Local simulation · No booking or payment is created</span></div>
+  const pieces: Record<number, string> = { 0: '♜', 1: '♞', 2: '♝', 3: '♛', 4: '♚', 5: '♝', 6: '♞', 7: '♜', 56: '♖', 57: '♘', 58: '♗', 59: '♕', 60: '♔', 61: '♗', 62: '♘', 63: '♖' }
+  for (let i = 8; i < 16; i++) pieces[i] = '♟'
+  for (let i = 48; i < 56; i++) pieces[i] = '♙'
+  if (step >= 1) { delete pieces[52]; pieces[36] = '♙' }
+  if (step >= 2) { delete pieces[12]; pieces[28] = '♟' }
+  if (step >= 3) { delete pieces[62]; pieces[45] = '♘' }
+  if (step >= 4) { delete pieces[1]; pieces[18] = '♞' }
+  return <div className="demo-panel chess-demo"><div className="board" role="img" aria-label={`Chess opening preview: ${moves[step]}`}>{Array.from({ length: 64 }, (_, i) => <span aria-hidden="true" key={i} className={(Math.floor(i / 8) + i) % 2 ? 'dark-square' : 'light-square'}>{pieces[i]}</span>)}</div><div><span className="demo-kicker">{id === 'chess' ? 'BITGAMBIT' : 'CHESS ANALYZER'} / OPENING EXPLORER</span><h3>A move at a time.</h3><p>Step through a sample King's Pawn opening.</p><p className="demo-status" aria-live="polite">{moves[step]}</p><div className="demo-controls"><button onClick={() => setStep(step - 1)} disabled={step === 0}>Previous</button><button onClick={() => setStep(step + 1)} disabled={step === 4}>Next move</button></div><span className="demo-footnote">Scripted replay · No engine analysis</span></div></div>
+}
