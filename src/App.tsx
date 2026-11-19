@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { profile, projects } from './portfolio'
 import './App.css'
+import { MotionControl, TechMarquee, AmbientMotion, tiltCard, resetCard } from './Motion'
 import { ProjectDemo } from './ProjectDemo'
 import { projectDetails, placeholderDemoUrl } from './projectDetails'
 function App() {
@@ -18,13 +19,13 @@ function App() {
    return () => { observer.disconnect(); elements.forEach(element => element.classList.remove('reveal')) }
  }, [filter])
  const visible = projects.filter(p => filter === 'All work' || p.category === filter)
- return <>
+ return <><AmbientMotion/>
  <a className="skip" href="#main">Skip to content</a>
- <header className="wrap"><a className="brand" href="#home" aria-label="Home">nvn<span>.</span></a><nav aria-label="Main navigation"><a href="#work">Work</a><a href="#about">About</a><a href="#contact">Contact</a></nav><span className="header-note">A developer's collection</span></header>
+ <header className="wrap"><a className="brand" href="#home" aria-label="Home">nvn<span>.</span></a><nav aria-label="Main navigation"><a href="#work">Work</a><a href="#about">About</a><a href="#contact">Contact</a></nav><MotionControl/></header>
  <main id="main">
  <section id="home" className="hero wrap"><div><p className="eyebrow">{profile.name} / IT PORTFOLIO</p><h1>Curiosity.<br/>Code.<br/><span>Things that work.</span></h1><p className="intro">I work in IT, exploring the space between thoughtful interfaces, connected systems, and applied AI.</p><a className="button" href="#work">Explore my work</a><a className="text-link" href="#about">A little about me</a></div><div className="hero-art" role="img" aria-label="Abstract illustration of connected software systems"><span className="art-label">IDEAS INTO INTERFACES</span><div className="orbit"/><div className="orbit second"/><div className="code-object">&lt;<b>/</b>&gt;</div><span className="chip chip-one">Web & mobile</span><span className="chip chip-two">Applied AI</span><div className="art-footer"><span>BUILD. LEARN. ITERATE.</span><span>✳</span></div></div></section>
- <div className="stack-strip"><div className="wrap"><span>Across the stack</span>{['React','TypeScript','Python','FastAPI','React Native'].map(s => <b key={s}>{s}</b>)}</div></div>
- <section id="work" className="work wrap"><div className="section-heading"><div><p className="eyebrow">SELECTED PROJECTS</p><h2>A few things I've<br/>been working on.</h2></div><p>From reading the news to thinking a move ahead.<br/>A collection of web, mobile, and AI projects.</p></div><div className="filters" aria-label="Filter projects">{['All work','AI & Web','Mobile','Web','Backend'].map(c => <button key={c} aria-pressed={filter === c} onClick={() => setFilter(c)}>{c}</button>)}</div><p className="sr-only" aria-live="polite">{visible.length} projects shown</p><div className="project-grid">{visible.map(p => <article key={p.id}><button className={'project-art '+p.id} onClick={() => show(p)} aria-label={'View '+p.name+' details'}><span className="project-type">{p.category}</span><span className="symbol" aria-hidden="true">{p.symbol}</span><strong>{p.name}</strong><small>{p.tagline}</small><span className="view">Explore project +</span></button><div className="project-title"><h3><button onClick={() => show(p)}>{p.name}</button></h3><span>{p.category}</span></div><p>{p.description}</p><div className="tags">{p.stack.map(s => <span key={s}>{s}</span>)}</div></article>)}</div></section>
+ <TechMarquee/>
+ <section id="work" className="work wrap"><div className="section-heading"><div><p className="eyebrow">SELECTED PROJECTS</p><h2>A few things I've<br/>been working on.</h2></div><p>From reading the news to thinking a move ahead.<br/>A collection of web, mobile, and AI projects.</p></div><div className="filters" aria-label="Filter projects">{['All work','AI & Web','Mobile','Web','Backend'].map(c => <button key={c} aria-pressed={filter === c} onClick={() => setFilter(c)}>{c}</button>)}</div><p className="sr-only" aria-live="polite">{visible.length} projects shown</p><div className="project-grid">{visible.map(p => <article key={p.id}><button onPointerMove={tiltCard} onPointerLeave={resetCard} onPointerCancel={resetCard} className={'project-art '+p.id} onClick={() => show(p)} aria-label={'View '+p.name+' details'}><span className="project-type">{p.category}</span><span className="symbol" aria-hidden="true">{p.symbol}</span><strong>{p.name}</strong><small>{p.tagline}</small><span className="view">Explore project +</span></button><div className="project-title"><h3><button onClick={() => show(p)}>{p.name}</button></h3><span>{p.category}</span></div><p>{p.description}</p><div className="tags">{p.stack.map(s => <span key={s}>{s}</span>)}</div></article>)}</div></section>
  <section id="about" className="about"><div className="wrap about-grid"><div><p className="eyebrow">BEHIND THE PROJECTS</p><h2>Always building.<br/><span>Always learning.</span></h2></div><div><p className="about-lead">Hi, I'm Nam. I like turning technical ideas into something you can interact with.</p><p>My project collection brings together user interfaces, backend services, and experiments with AI. I enjoy exploring how those pieces fit together into a useful experience.</p><div className="skills"><div><h3>Interfaces</h3><p>React · TypeScript · React Native · Expo</p></div><div><h3>Services & systems</h3><p>Python · FastAPI · Docker · API architecture</p></div><div><h3>Explorations</h3><p>News summarization · Virtual try-on · Chess analysis</p></div></div></div></div></section>
  <section id="contact" className="contact wrap"><p className="eyebrow">WHAT'S NEXT?</p><h2>Good things start<br/>with a conversation<span>.</span></h2>{profile.email ? <a className="button" href={'mailto:'+profile.email}>Let's talk</a> : <p>Contact details are coming soon.</p>}<div className="socials">{profile.github && <a href={profile.github}>GitHub</a>}{profile.linkedin && <a href={profile.linkedin}>LinkedIn</a>}</div></section>
  </main><footer className="wrap"><span>© {new Date().getFullYear()} {profile.name}</span><span>Made with curiosity & React.</span><a href="#home">Back to top</a></footer>
@@ -41,4 +42,5 @@ function App() {
  </>
 }
 export default App
+
 
