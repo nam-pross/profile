@@ -14,7 +14,7 @@ export function Christmas() {
     <button className="christmas-toggle" aria-pressed={enabled} onClick={() => setEnabled(value => !value)}><span aria-hidden="true">✦</span> Noel {enabled ? 'ON' : 'OFF'}</button>
     {enabled && createPortal(<div className="christmas-decoration" aria-hidden="true">
       <div className="fairy-lights">{Array.from({ length: 22 }, (_, i) => <i key={i} style={{ '--i': i } as CSSProperties}/>)}</div>
-      <div className="snowfall">{Array.from({ length: 38 }, (_, i) => <i key={i} style={{ left: `${(i * 37.7) % 100}%`, '--size': `${2 + i % 4}px`, '--duration': `${12 + i % 13}s`, '--delay': `${-i * 2.3}s`, '--drift': `${(i % 2 ? 1 : -1) * (25 + i % 60)}px` } as CSSProperties}/>)}</div>
+      <div className="snowfall">{Array.from({ length: 72 }, (_, i) => <i key={i} style={{ left: `${(i * 37.7) % 100}%`, '--size': `${3 + i % 5}px`, '--duration': `${10 + i % 15}s`, '--delay': `${-i * 2.3}s`, '--drift': `${(i % 2 ? 1 : -1) * (25 + i % 60)}px`, '--sway': `${3 + i % 4}s`, '--opacity': .4 + (i % 5) * .12 } as CSSProperties}><span className={i % 8 === 0 ? 'snow-crystal' : 'snow-dot'}>{i % 8 === 0 ? '❄' : ''}</span></i>)}</div>
     </div>, document.body)}
   </>
 }

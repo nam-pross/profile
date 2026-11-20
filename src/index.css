@@ -10,7 +10,10 @@
 .fairy-lights i:nth-child(3n) { background:#e67b79;box-shadow:0 2px 13px #e67b7999;transform:rotate(12deg); }
 .fairy-lights i:nth-child(3n + 1) { background:#a4d5b0;box-shadow:0 2px 13px #a4d5b099; }
 .snowfall { position:absolute;inset:0; }
-.snowfall i { position:absolute;top:-12px;width:var(--size);height:var(--size);background:#eef8f2;border-radius:50%;opacity:.45;animation:snow-fall var(--duration) var(--delay) linear infinite; }
+.snowfall i { position:absolute;top:-24px;width:var(--size);height:var(--size);opacity:var(--opacity);animation:snow-fall var(--duration) var(--delay) linear infinite; }
+.snowfall i > span { display:block;animation:snow-sway var(--sway) var(--delay) ease-in-out infinite alternate; }
+.snow-dot { width:100%;height:100%;background:#f1f8ff;border-radius:50%;box-shadow:0 0 5px #dcf0ff55; }
+.snow-crystal { color:#f1f8ff;font-size:18px;font-style:normal;line-height:1;text-shadow:0 0 6px #dcf0ff66; }
 .christmas-scene { display:none; }
 html[data-christmas=on] .hero-art { background:radial-gradient(ellipse at 50% 45%,#244735 0%,#101c18 55%,#0e1512 100%);border-color:#c7ad7e30; }
 html[data-christmas=on] .hero-art > :not(.christmas-scene) { display:none; }
@@ -22,10 +25,11 @@ html[data-christmas=on] .christmas-scene { display:flex;position:absolute;inset:
 .season-greeting { position:absolute;bottom:23px;font-family:var(--font-display);font-size:24px;letter-spacing:-.04em;color:#f4e6c9;text-align:center; }
 .season-greeting span { display:block;margin-top:4px;font-family:var(--font-sans);font-size:12px;letter-spacing:.04em;color:#9eb4a7; }
 html[data-christmas=on] .orb-blue { background:radial-gradient(circle,#d16b7015,transparent 68%); }
-@keyframes snow-fall { from { transform:translate3d(0,-12px,0); } to { transform:translate3d(var(--drift),calc(100dvh + 24px),0); } }
+@keyframes snow-fall { from { transform:translate3d(0,-24px,0); } to { transform:translate3d(var(--drift),calc(100dvh + 48px),0); } }
+@keyframes snow-sway { from { transform:translateX(-12px) rotate(-15deg); } to { transform:translateX(12px) rotate(15deg); } }
 @keyframes festive-glow { 0%,100% { opacity:1; } 50% { opacity:.45; } }
 @keyframes tree-arrive { from { opacity:0;transform:translateY(12px); } to { opacity:1;transform:translateY(0); } }
-@media(max-width:600px) { .snowfall i:nth-child(n+21) { display:none; } .fairy-lights i:nth-child(2n) { display:none; } }
+@media(max-width:600px) { .snowfall i:nth-child(n+37) { display:none; } .fairy-lights i:nth-child(2n) { display:none; } }
 @media(prefers-reduced-motion:reduce) { .snowfall { display:none; } }
 
 @theme {
