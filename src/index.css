@@ -1,6 +1,33 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 @import 'tailwindcss';
 
+.christmas-toggle { display:flex;align-items:center;gap:8px;border:1px solid #ddbb7355;border-radius:999px;padding:8px 12px;color:#eed7a5;background:#ddbb730a;font-size:12px; }
+.christmas-toggle span { color:#f2ce86; }
+.christmas-toggle:hover { background:#ddbb731a; }
+.christmas-decoration { position:fixed;inset:0;z-index:40;pointer-events:none;overflow:hidden; }
+.fairy-lights { position:absolute;top:-7px;left:0;right:0;display:flex;justify-content:space-around;border-top:1px solid #6e775d;height:30px; }
+.fairy-lights i { margin-top:7px;width:6px;height:11px;border-radius:2px 2px 6px 6px;background:#f4d39a;box-shadow:0 2px 13px #f4d39a99;transform:rotate(-12deg);animation:festive-glow 3.5s ease-in-out infinite;animation-delay:calc(var(--i) * -.37s); }
+.fairy-lights i:nth-child(3n) { background:#e67b79;box-shadow:0 2px 13px #e67b7999;transform:rotate(12deg); }
+.fairy-lights i:nth-child(3n + 1) { background:#a4d5b0;box-shadow:0 2px 13px #a4d5b099; }
+.snowfall { position:absolute;inset:0; }
+.snowfall i { position:absolute;top:-12px;width:var(--size);height:var(--size);background:#eef8f2;border-radius:50%;opacity:.45;animation:snow-fall var(--duration) var(--delay) linear infinite; }
+.christmas-scene { display:none; }
+html[data-christmas=on] .hero-art { background:radial-gradient(ellipse at 50% 45%,#244735 0%,#101c18 55%,#0e1512 100%);border-color:#c7ad7e30; }
+html[data-christmas=on] .hero-art > :not(.christmas-scene) { display:none; }
+html[data-christmas=on] .christmas-scene { display:flex;position:absolute;inset:0;align-items:center;justify-content:center;flex-direction:column; }
+.season-label { position:absolute;top:24px;font-size:10px;letter-spacing:.22em;color:#c7ad7e; }
+.christmas-tree { height:76%;max-width:90%;margin-top:-8px;filter:drop-shadow(0 12px 22px #0004);animation:tree-arrive .8s ease both; }
+.tree-star { filter:drop-shadow(0 0 9px #f4d39a99);animation:festive-glow 4s ease-in-out infinite; }
+.tree-ornament { animation:festive-glow 3s ease-in-out infinite; }
+.season-greeting { position:absolute;bottom:23px;font-family:var(--font-display);font-size:24px;letter-spacing:-.04em;color:#f4e6c9;text-align:center; }
+.season-greeting span { display:block;margin-top:4px;font-family:var(--font-sans);font-size:12px;letter-spacing:.04em;color:#9eb4a7; }
+html[data-christmas=on] .orb-blue { background:radial-gradient(circle,#d16b7015,transparent 68%); }
+@keyframes snow-fall { from { transform:translate3d(0,-12px,0); } to { transform:translate3d(var(--drift),calc(100dvh + 24px),0); } }
+@keyframes festive-glow { 0%,100% { opacity:1; } 50% { opacity:.45; } }
+@keyframes tree-arrive { from { opacity:0;transform:translateY(12px); } to { opacity:1;transform:translateY(0); } }
+@media(max-width:600px) { .snowfall i:nth-child(n+21) { display:none; } .fairy-lights i:nth-child(2n) { display:none; } }
+@media(prefers-reduced-motion:reduce) { .snowfall { display:none; } }
+
 @theme {
  --font-sans: 'DM Sans', sans-serif;
  --font-display: 'Space Grotesk', sans-serif;
