@@ -2,11 +2,12 @@ import { useEffect, useRef, useState } from 'react'
 import { Christmas, ChristmasTree } from './Christmas'
 import { profile, projects } from './portfolio'
 import { ProjectDemo } from './ProjectDemo'
-import { projectDetails, placeholderDemoUrl } from './projectDetails'
+import { projectDetails, placeholderDemoUrl, llmNewsModules } from './projectDetails'
 import { MotionControl, TechMarquee, AmbientMotion, tiltCard, resetCard } from './Motion'
 
 type Project = (typeof projects)[number]
 const tones: Record<string, string> = {
+ 'llm-news': 'from-cyan-950 to-zinc-950 text-cyan-200',
  news: 'from-emerald-950 to-zinc-950 text-emerald-200',
  stylio: 'from-violet-950 to-zinc-950 text-violet-200',
  chess: 'from-lime-950 to-zinc-950 text-lime-200',
@@ -53,6 +54,7 @@ function ProjectPage({ project }: { project: Project }) {
  <nav aria-label="Breadcrumb" className="mb-12 flex flex-wrap gap-3 text-sm text-zinc-500"><a href="#/work" className="hover:text-lime-300">All projects</a><span>/</span><span aria-current="page" className="text-zinc-200">{project.name}</span></nav>
  <div className="mb-10 grid gap-8 lg:grid-cols-[1.5fr_1fr] lg:items-end"><div><p className={eyebrow}>{project.category} / Project case study</p><h1 tabIndex={-1} className="mt-4 font-display text-5xl tracking-[-.05em] sm:text-7xl">{project.name}<span className="text-lime-300">.</span></h1><p className="mt-5 max-w-2xl text-lg leading-8 text-zinc-400">{project.description}</p></div><div className="lg:justify-self-end"><Tags items={project.stack}/><p className="mt-4 text-xs text-zinc-500">Development project · Concept demo included</p></div></div>
  <ProjectVisual project={project} large/>
+ {project.id === 'llm-news' && <section className="pt-14" aria-labelledby="module-heading"><p className={eyebrow}>Module breakdown</p><h2 id="module-heading" className="mt-4 font-display text-3xl">Four responsibilities. One summarization pipeline.</h2><p className="mt-5 max-w-3xl leading-8 text-zinc-400">Input: article text, language (vi / en), and mode (super / normal). Output: a JSON summary with metadata for inspecting how it was generated.</p><div className="mt-8 grid gap-5 md:grid-cols-2">{llmNewsModules.map(module => <article key={module.name} className="rounded-2xl border border-white/10 bg-white/[.025] p-7"><h3 className="font-display text-xl text-cyan-200">{module.name}</h3><p className="mt-3 break-words font-mono text-sm text-zinc-500">{module.entry}</p><p className="mt-4 leading-7 text-zinc-400">{module.description}</p></article>)}</div></section>}
  <div className="grid gap-12 py-16 lg:grid-cols-[1.6fr_1fr] lg:gap-20"><div><p className={eyebrow}>Overview</p><h2 className="mt-4 font-display text-3xl leading-snug tracking-tight">{detail.focus}</h2><p className="mt-6 leading-8 text-zinc-400">{project.details}</p></div><aside className="rounded-2xl border border-white/10 bg-white/[.025] p-7"><h2 className="font-display text-xl">Project highlights</h2><ul className="mt-6 space-y-5">{detail.highlights.map(h => <li key={h} className="flex gap-3 text-sm leading-6 text-zinc-400"><span className="text-lime-300" aria-hidden="true">✳</span>{h}</li>)}</ul></aside></div>
  <section className="border-t border-white/10 py-12"><p className={eyebrow}>Under the hood</p><h2 className="mb-7 mt-4 font-display text-3xl">How it fits together</h2><div className="grid gap-4 sm:grid-cols-3">{detail.architecture.map(a => <div key={a} className="rounded-xl border border-white/10 bg-zinc-900/60 p-6 text-center text-sm text-zinc-300">{a}</div>)}</div></section>
  <section className="py-8"><div className="mb-7 flex flex-wrap items-end justify-between gap-4"><div><p className={eyebrow}>Try it here</p><h2 className="mt-3 font-display text-3xl">Interactive concept demo</h2></div><span className="rounded-full border border-lime-300/20 bg-lime-300/5 px-3 py-1.5 text-xs text-lime-300">Portfolio illustration</span></div><ProjectDemo key={project.id} id={project.id}/><div className="mt-7 flex flex-wrap items-center gap-5"><a className={secondary} href={placeholderDemoUrl(project.id)} target="_blank" rel="noopener noreferrer">Open demo link (placeholder)</a><p className="max-w-sm text-xs leading-6 text-zinc-500">This example.com link is a placeholder.<br/>The interactive preview above is a local illustration.</p></div></section>
